@@ -28,3 +28,29 @@ const todoList = [
 ];
 
 // add your code here
+
+'use strict';
+
+const ulElement = document.querySelector('ul');
+
+todoList.forEach(function(todo) {
+  const liElement = document.createElement('li');
+
+  const inputElement = document.createElement('input');
+  inputElement.type = 'checkbox';
+  inputElement.id = `todo-${todo.id}`;
+  if (todo.completed) {
+    inputElement.checked = 'checked';
+  }
+
+  const labelElement = document.createElement('label')
+  labelElement.htmlFor = `todo-${todo.id}`;
+  labelElement.textContent = todo.task;
+
+  liElement.appendChild(inputElement);
+  liElement.appendChild(labelElement);
+
+  ulElement.appendChild(liElement);
+});
+
+
