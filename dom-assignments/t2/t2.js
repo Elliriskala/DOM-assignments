@@ -43,7 +43,7 @@ todoList.forEach(function(todo) {
     inputElement.checked = 'checked';
   }
 
-  const labelElement = document.createElement('label')
+  const labelElement = document.createElement('label');
   labelElement.htmlFor = `todo-${todo.id}`;
   labelElement.textContent = todo.task;
 
