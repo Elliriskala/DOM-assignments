@@ -771,3 +771,58 @@ const restaurants = [
 ];
 
 // your code here
+
+'use strict';
+
+if ('geolocation' in navigator) {
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+function success(position) {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  sortRestaurants(latitude, longitude);
+}
+
+function error() {
+    console.log('Unable to track your location');
+}
+
+function getDistance(lat1, lon1, lat2, lon2) {
+  const distance = Math.sqrt((lat2-lat1)**2 +(lon2-lon1)**2);
+  return distance;
+}
+
+function sortRestaurants(myLatitude, myLongitude) {
+  restaurants.forEach(restaurant => {
+    const [longitude, latitude] = restaurant.location.coordinates;
+    restaurant.distance = getDistance(myLatitude, myLongitude,latitude, longitude);
+  });
+
+  restaurants.sort((a, b) => a.distance - b.distance);
+  display(restaurants);
+}
+
+function display(sorted) {
+  const table = document.querySelector('#restaurants');
+
+  sorted.forEach(restaurant => {
+    const row = document.createElement('tr');
+
+    const name = document.createElement('td');
+    name.textContent = restaurant.name;
+    row.appendChild(name);
+
+    const address = document.createElement('td');
+    address.textContent = restaurant.address;
+    row.appendChild(address);
+
+    const city = document.createElement('td');
+    city.textContent = restaurant.city;
+    row.appendChild(city);
+
+    table.appendChild(row);
+  });
+}
+
